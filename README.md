@@ -197,5 +197,5 @@ curl -X PUT \
 
 ## 示例文件
 
-- 配置示例: [config/deployer.example.toml](/Users/qingyi/Documents/Workspace/PROJ_hachimi/config/deployer.example.toml)
-
+- 配置示例: [config/deployer.example.toml](./config/deployer.example.toml)
+- Compose 示例: [compose.example.yml](./compose.example.yml)

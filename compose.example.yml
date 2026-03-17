@@ -1,0 +1,32 @@
+services:
+  hachimi_deployer:
+    # Replace with your actual image tag published by CI, e.g.:
+    # ghcr.io/<owner>/<repo>:v1.2.3
+    image: ghcr.io/OWNER/REPO:latest
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      HACHIMI_CONFIG: /app/config/deployer.toml
+      # Optional:
+      # RUST_LOG: info,tower_http=info,hachimi_deployer=info
+
+    volumes:
+      - ./config/deployer.toml:/app/config/deployer.toml:ro
+      # Needs read-write access to talk to the engine API.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    # Run as non-root (matches Dockerfile user).
+    user: "10001:10001"
+
+    # Ensure the process can access /var/run/docker.sock (typically 0660 root:docker on Linux).
+    # Export DOCKER_SOCKET_GID with:
+    #   export DOCKER_SOCKET_GID="$(stat -c '%g' /var/run/docker.sock)"
+    # Then run:
+    #   docker compose --env-file .env.compose up -d
+    group_add:
+      - "${DOCKER_SOCKET_GID}"
+
+    restart: unless-stopped
+
