@@ -1,0 +1,9 @@
+[server]
+listen = "0.0.0.0:3000"
+
+[engine]
+socket_path = "/var/run/docker.sock"
+
+[[images]]
+image_ref = "ghcr.io/acme/app:prod"
+bearer_token = "replace-me"
